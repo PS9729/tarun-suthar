@@ -1,72 +1,258 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Portfolio Website Design</title>
-    <link rel="stylesheet" href="styles.css">
-    <!----Font awesome cdn  font icon css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHub — PDF Viewer</title>
+<style>
+:root{
+  --bg:#0b0820;
+  --glass:#ffffff0f;
+  --accent:#7c4dff;
+  --card:#121026;
+  --muted:#bfc6ff55;
+}
+body{
+  margin:0;padding:0;height:100vh;font-family:Inter,system-ui,sans-serif;
+  background:url('https://images.unsplash.com/photo-1593642634367-d91a135587b5?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+  display:flex;gap:18px;color:#eef2ff;
+}
+.sidebar{width:240px;background:linear-gradient(180deg,var(--glass),rgba(255,255,255,0.02));border-radius:14px;padding:18px;backdrop-filter: blur(8px);border:1px solid rgba(255,255,255,0.04);overflow:auto;}
+.logo{font-weight:700;font-size:18px;margin-bottom:12px;color:var(--accent);}
+.course-card{padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);margin-bottom:10px;cursor:pointer;border:1px solid transparent;transition:all .18s ease;display:flex;justify-content:space-between;align-items:center;}
+.course-card:hover{transform:translateY(-4px);background:rgba(255,255,255,0.03);}
+.course-card.active{box-shadow:0 6px 18px rgba(124,77,255,0.12);border-color:rgba(124,77,255,0.18);background:linear-gradient(135deg, rgba(124,77,255,0.12), rgba(124,77,255,0.04));}
+.main{flex:1;display:flex;flex-direction:column;gap:16px;overflow:auto;}
+.breadcrumbs{display:flex;gap:10px;align-items:center;}
+.crumb{padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.02);cursor:default;}
+.area{display:flex;gap:16px;align-items:flex-start;}
+.panel{flex:1;background:var(--card);border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,0.03);min-height:300px;}
+.panel h3{margin:0 0 12px 0;font-size:16px;color:var(--muted);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(160px,1fr));gap:12px;}
+.year-card, .subject-card{padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));cursor:pointer;border:1px solid rgba(255,255,255,0.02);text-align:center;transition:all .18s ease;display:flex;justify-content:space-between;align-items:center;}
+.year-card:hover, .subject-card:hover{transform:translateY(-4px);}
+.year-card.active, .subject-card.active{outline: 3px solid rgba(124,77,255,0.12);box-shadow:0 8px 22px rgba(0,0,0,0.6);}
+.pdf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:12px;}
+.pdf-box{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
+.pdf-title{font-weight:600;color:#fff;font-size:13px;word-break:break-word;cursor:pointer;}
+.pdf-actions{margin-top:auto;display:flex;gap:8px;width:100%;}
+.tabs{display:flex;gap:8px;margin-top:12px;}
+.tab{padding:6px 12px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer;}
+.tab.active{background:var(--accent);}
+.btn{padding:8px 10px;border-radius:8px;cursor:pointer;border:0;background:var(--accent);color:#fff;font-size:13px;}
+.btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#dfe6ff;}
+.right{width:360px;display:flex;flex-direction:column;gap:12px;}
+.upload-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03);}
+#dropBox{height:140px;border-radius:10px;border:2px dashed rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:rgba(255,255,255,0.01);cursor:pointer;transition:all .15s ease;}
+#dropBox.hover{border-color:var(--accent);box-shadow:0 8px 30px rgba(124,77,255,0.06);}
+input[type=file]{display:none;}
+.muted{font-size:13px;color:#c9d2ff66;}
+.remove-btn{background:red;padding:2px 6px;border-radius:6px;font-size:11px;color:#fff;border:none;cursor:pointer;}
+</style>
 </head>
 <body>
-     <div class="hero-header">
-        <div class="wrapper">
-            <header>
-                <div class="logo">
-                    <i class="fa-solid fa-t"></i>
-                    <div class="logo-text">TARUN JANGIR</div>
-                </div>
-              
-            </header>
-            <div class="container">
-                 <div class="hero-pic">
-                    <img src="trn.png" alt="profile pic">
-                 </div>
-                 <div class="hero-text">
-                    <h5>Hi I'm <span class="input"> SOCIAL MEDIA INFULNCER </span></h5>
-                    <h4>I AM WORKING IN E-MITRA </h4>
-                    <h2>CONTACT FOR EMITRA WORK</h2>
-                    <h1>TARUN JANGIR</h1>
-                    
-                    
 
-                    <div class="btn-group">
-                       <a href="#" class="btn active">TARUN </a>
-                       <a href="#" class="btn">JANGIR</a>
-                    </div>
+<div class="sidebar">
+  <div class="logo">StudyHub</div>
+  <div id="coursesList"></div>
+  <hr style="border:none;margin:12px 0;border-top:1px solid rgba(255,255,255,0.02)">
+  <input id="newCourseName" placeholder="New course" style="width:100%;padding:8px;border-radius:8px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.04)">
+  <button id="addCourseBtn" class="btn" style="width:100%;margin-top:6px;">Add Course</button>
+</div>
 
-                    <div class="social">
-                        <a href="https://www.facebook.com/profile.php?id=100071120197047&mibextid=ZbWKwL"><i class="fa-brands fa-facebook"></i></a>
-
-                        <a href="https://www.instagram.com/black.heart_028?igsh=OHEycTQ4N24zYjky?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fa-brands fa-instagram"></i></a>
-                   <a href="tel:+91 7568648396"> <i class="fa-duotone fa-solid fa-phone"></i></i>   </a>
-
-                 </div>
-            </div>
+<div class="main">
+  <div class="breadcrumbs">
+    <div class="crumb" id="crumbCourses">Courses</div>
+    <div class="crumb" id="crumbYear" style="display:none">Year</div>
+    <div class="crumb" id="crumbSubject" style="display:none">Subject</div>
+  </div>
+  <div class="area">
+    <div class="panel">
+      <h3 id="panelTitle">Select a course</h3>
+      <div id="yearsWrap" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Years</div>
+          <div style="display:flex;gap:6px">
+            <input id="newYearName" placeholder="Year" style="padding:6px;border-radius:8px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.04)">
+            <button id="addYearBtn" class="btn">Add</button>
+          </div>
         </div>
-     </div>
-     <!---typed js for typing text effect-->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.10/typed.min.js"></script>
-     <script>
-        /** creating button click show hide navbar **/
-        var togglebtn=document.querySelector(".togglebtn");
-        var nav=document.querySelector(".navlinks");
-        var links=document.querySelector(".navlinks li");
+        <div class="grid" id="yearsGrid" style="margin-top:12px"></div>
+      </div>
+      <div id="subjectsWrap" style="display:none;margin-top:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="font-weight:700">Subjects</div>
+          <div style="display:flex;gap:6px">
+            <input id="newSubjectName" placeholder="Subject" style="padding:6px;border-radius:8px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.04)">
+            <button id="addSubjectBtn" class="btn">Add</button>
+          </div>
+        </div>
+        <div class="grid" id="subjectsGrid" style="margin-top:12px"></div>
+      </div>
+      <div id="tabsWrap" style="display:none;margin-top:12px">
+        <div class="tabs">
+          <div class="tab active" data-type="last-year">Last Year Papers</div>
+          <div class="tab" data-type="books">Books</div>
+        </div>
+      </div>
+      <div id="pdfsWrap" style="display:none;margin-top:14px">
+        <div class="pdf-grid" id="pdfGrid" style="margin-top:12px"></div>
+      </div>
+    </div>
 
-        togglebtn.addEventListener("click", function(){
-            this.classList.toggle("click");
-            nav.classList.toggle("open");
-        })
+    <div class="right">
+      <div class="upload-card">
+        <div style="font-weight:700;margin-bottom:6px">Add PDF</div>
+        <div id="dropBox" title="Drop PDF here or click to pick file">
+          <div style="font-weight:700">Drop PDF here</div>
+          <div style="font-size:13px;color:#cfd7ff88">or click to choose</div>
+        </div>
+        <input id="fileInput" type="file" accept="application/pdf" multiple>
+        <div class="muted" style="margin-top:6px;font-size:12px;color:#aaa;">* For GitHub Pages: upload selected PDFs manually to /pdfs/ folder for everyone to view</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-        var typed=new Typed(".input",{
-            strings:["Frontend Developer","web Designer","Web Developer"],
-            typedSpeed:70,
-            backSpeed:55,
-            loop:true
-        })
-     </script>
+<script>
+let contentData={courses:{}};
+const STORAGE_KEY="studyhub_pdfs_tabs";
+function saveToLocal(){localStorage.setItem(STORAGE_KEY,JSON.stringify(contentData));}
+function loadFromLocal(){const d=localStorage.getItem(STORAGE_KEY);if(d){contentData=JSON.parse(d);} }
+loadFromLocal();
+
+const coursesList=document.getElementById("coursesList");
+const yearsWrap=document.getElementById("yearsWrap");
+const yearsGrid=document.getElementById("yearsGrid");
+const subjectsWrap=document.getElementById("subjectsWrap");
+const subjectsGrid=document.getElementById("subjectsGrid");
+const pdfsWrap=document.getElementById("pdfsWrap");
+const pdfGrid=document.getElementById("pdfGrid");
+const panelTitle=document.getElementById("panelTitle");
+const crumbYear=document.getElementById("crumbYear");
+const crumbSubject=document.getElementById("crumbSubject");
+const dropBox=document.getElementById("dropBox");
+const fileInput=document.getElementById("fileInput");
+const newCourseName=document.getElementById("newCourseName");
+const addCourseBtn=document.getElementById("addCourseBtn");
+const newYearName=document.getElementById("newYearName");
+const addYearBtn=document.getElementById("addYearBtn");
+const newSubjectName=document.getElementById("newSubjectName");
+const addSubjectBtn=document.getElementById("addSubjectBtn");
+const tabsWrap=document.getElementById("tabsWrap");
+
+let activeCourseKey=null,activeYearKey=null,activeSubjectKey=null,activeTab="last-year";
+function genKey(t){return t.toLowerCase().replace(/[^a-z0-9]+/g,'-')||("k"+Date.now());}
+
+// Render Courses
+function renderCourses(){
+  coursesList.innerHTML="";
+  const keys=Object.keys(contentData.courses);
+  if(keys.length===0){ coursesList.innerHTML=`<div style="color:#888">No courses yet</div>`; return; }
+  keys.forEach(k=>{
+    const div=document.createElement("div");
+    div.className="course-card"+(k===activeCourseKey?" active":"");
+    const span=document.createElement("span"); span.innerText=contentData.courses[k].title;
+    const rm=document.createElement("button"); rm.className="remove-btn"; rm.innerText="X"; rm.onclick=(e)=>{ e.stopPropagation(); if(confirm("Remove course?")){ delete contentData.courses[k]; saveToLocal(); if(activeCourseKey===k) activeCourseKey=null; renderCourses(); renderYearsPanel(); } };
+    div.appendChild(span); div.appendChild(rm);
+    div.onclick=()=>{activeCourseKey=k;activeYearKey=null;activeSubjectKey=null;renderCourses();renderYearsPanel();}
+    coursesList.appendChild(div);
+  });
+}
+
+// Render Years
+function renderYearsPanel(){
+  if(!activeCourseKey){ panelTitle.innerText="Select a course"; yearsWrap.style.display="none";subjectsWrap.style.display="none";pdfsWrap.style.display="none";crumbYear.style.display="none";crumbSubject.style.display="none"; tabsWrap.style.display="none"; return;}
+  panelTitle.innerText=`Course: ${contentData.courses[activeCourseKey].title}`;
+  yearsWrap.style.display="block";crumbYear.style.display="inline-block";
+  const yObj=contentData.courses[activeCourseKey].years||{};
+  yearsGrid.innerHTML="";
+  const yKeys=Object.keys(yObj);
+  if(yKeys.length===0){ yearsGrid.innerHTML=`<div style="color:#888">No years yet</div>`; } 
+  else{ yKeys.forEach(yk=>{ const el=document.createElement("div"); el.className="year-card"+(yk===activeYearKey?" active":"");
+    const span=document.createElement("span"); span.innerText=yObj[yk].title;
+    const rm=document.createElement("button"); rm.className="remove-btn"; rm.innerText="X"; rm.onclick=(e)=>{ e.stopPropagation(); if(confirm("Remove year?")){ delete contentData.courses[activeCourseKey].years[yk]; saveToLocal(); if(activeYearKey===yk) activeYearKey=null; renderYearsPanel(); renderSubjectsPanel(); } };
+    el.appendChild(span); el.appendChild(rm);
+    el.onclick=()=>{activeYearKey=yk;activeSubjectKey=null;renderYearsPanel();renderSubjectsPanel();};
+    yearsGrid.appendChild(el);
+  });}
+}
+
+// Render Subjects
+function renderSubjectsPanel(){
+  if(!activeYearKey){subjectsWrap.style.display="none";pdfsWrap.style.display="none";crumbSubject.style.display="none"; tabsWrap.style.display="none";return;}
+  subjectsWrap.style.display="block";crumbSubject.style.display="inline-block";
+  const sObj=contentData.courses[activeCourseKey].years[activeYearKey].subjects||{};
+  subjectsGrid.innerHTML="";
+  const sKeys=Object.keys(sObj);
+  if(sKeys.length===0){ subjectsGrid.innerHTML=`<div style="color:#888">No subjects yet</div>`; tabsWrap.style.display="none"; pdfsWrap.style.display="none"; }
+  else{
+    sKeys.forEach(sk=>{
+      const div=document.createElement("div"); div.className="subject-card"+(sk===activeSubjectKey?" active":"");
+      const span=document.createElement("span"); span.innerText=sObj[sk].title;
+      const rm=document.createElement("button"); rm.className="remove-btn"; rm.innerText="X"; rm.onclick=(e)=>{ e.stopPropagation(); if(confirm("Remove subject?")){ delete contentData.courses[activeCourseKey].years[activeYearKey].subjects[sk]; saveToLocal(); if(activeSubjectKey===sk) activeSubjectKey=null; renderSubjectsPanel(); renderPDFsGrid(); } };
+      div.appendChild(span); div.appendChild(rm);
+      div.onclick=()=>{activeSubjectKey=sk;activeTab="last-year";renderSubjectsPanel();renderPDFsGrid(); tabsWrap.style.display="block";};
+      subjectsGrid.appendChild(div);
+    });
+  }
+}
+
+// Render PDFs
+function renderPDFsGrid(){
+  if(!activeSubjectKey){pdfsWrap.style.display="none";return;}
+  pdfsWrap.style.display="block"; pdfGrid.innerHTML="";
+  const subj=contentData.courses[activeCourseKey].years[activeYearKey].subjects[activeSubjectKey];
+  const pdfList=subj[activeTab]||[]; subj[activeTab]=pdfList;
+  pdfList.forEach((p)=>{
+    const box=document.createElement("div"); box.className="pdf-box";
+    const title=document.createElement("div"); title.className="pdf-title"; title.innerText=p.name;
+    const actions=document.createElement("div"); actions.className="pdf-actions";
+
+    const viewBtn=document.createElement("a");
+    viewBtn.href = p.blobUrl || ("/pdfs/" + encodeURIComponent(p.name));
+    viewBtn.target="_blank";
+    viewBtn.className="btn";
+    viewBtn.innerText="View";
+
+    const removeBtn=document.createElement("button");
+    removeBtn.className="btn ghost"; removeBtn.innerText="Remove"; 
+    removeBtn.onclick=()=>{ removePDF(activeTab,p.name); };
+
+    actions.appendChild(viewBtn); actions.appendChild(removeBtn);
+    box.appendChild(title); box.appendChild(actions);
+    pdfGrid.appendChild(box);
+  });
+}
+
+// Add
+addCourseBtn.onclick=()=>{ const name=newCourseName.value.trim(); if(!name) return; const k=genKey(name); contentData.courses[k]={title:name,years:{}}; newCourseName.value=""; saveToLocal(); renderCourses();}
+addYearBtn.onclick=()=>{ if(!activeCourseKey){alert("Select course first"); return;} const name=newYearName.value.trim(); if(!name) return; const k=genKey(name); contentData.courses[activeCourseKey].years[k]={title:name,subjects:{}}; newYearName.value=""; saveToLocal(); renderYearsPanel();}
+addSubjectBtn.onclick=()=>{ if(!activeCourseKey||!activeYearKey){alert("Select course & year");return;} const name=newSubjectName.value.trim(); if(!name) return; const k=genKey(name); contentData.courses[activeCourseKey].years[activeYearKey].subjects[k]={title:name,"last-year":[],"books":[]}; newSubjectName.value=""; saveToLocal(); renderSubjectsPanel();}
+
+// Remove PDF
+function removePDF(tab,name){ if(!confirm("Remove "+name+"?")) return; const subj=contentData.courses[activeCourseKey].years[activeYearKey].subjects[activeSubjectKey]; subj[tab]=subj[tab].filter(p=>p.name!==name); saveToLocal(); renderPDFsGrid();}
+
+// File Upload
+fileInput.addEventListener("change",(e)=>{
+  if(!activeCourseKey||!activeYearKey||!activeSubjectKey){alert("Select course → year → subject first"); fileInput.value=""; return;}
+  Array.from(e.target.files).forEach(f=>{
+    const url = URL.createObjectURL(f);
+    const subj=contentData.courses[activeCourseKey].years[activeYearKey].subjects[activeSubjectKey];
+    subj[activeTab].push({name:f.name, blobUrl:url});
+  });
+  saveToLocal(); renderPDFsGrid(); fileInput.value="";
+});
+
+dropBox.addEventListener("click",()=>fileInput.click());
+dropBox.addEventListener("dragover",(e)=>{e.preventDefault();dropBox.classList.add("hover");});
+dropBox.addEventListener("dragleave",()=>dropBox.classList.remove("hover"));
+dropBox.addEventListener("drop",(e)=>{e.preventDefault();dropBox.classList.remove("hover"); Array.from(e.dataTransfer.files).forEach(f=>{ if(!activeCourseKey||!activeYearKey||!activeSubjectKey){alert("Select course → year → subject first"); return;} const url=URL.createObjectURL(f); const subj=contentData.courses[activeCourseKey].years[activeYearKey].subjects[activeSubjectKey]; subj[activeTab].push({name:f.name, blobUrl:url}); }); saveToLocal(); renderPDFsGrid();});
+
+// Tabs
+document.querySelectorAll(".tab").forEach(t=>{ t.onclick=()=>{ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active")); t.classList.add("active"); activeTab=t.getAttribute("data-type"); renderPDFsGrid(); } });
+
+renderCourses(); renderYearsPanel(); renderSubjectsPanel(); renderPDFsGrid();
+</script>
 </body>
-</html>''
-
+</html>
