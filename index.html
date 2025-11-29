@@ -225,7 +225,7 @@ function renderPDFsGrid(){
   });
 }
 
-// Add
+// Add functions
 addCourseBtn.onclick=()=>{ const name=newCourseName.value.trim(); if(!name) return; const k=genKey(name); contentData.courses[k]={title:name,years:{}}; newCourseName.value=""; saveToLocal(); renderCourses();}
 addYearBtn.onclick=()=>{ if(!activeCourseKey){alert("Select course first"); return;} const name=newYearName.value.trim(); if(!name) return; const k=genKey(name); contentData.courses[activeCourseKey].years[k]={title:name,subjects:{}}; newYearName.value=""; saveToLocal(); renderYearsPanel();}
 addSubjectBtn.onclick=()=>{ if(!activeCourseKey||!activeYearKey){alert("Select course & year");return;} const name=newSubjectName.value.trim(); if(!name) return; const k=genKey(name); contentData.courses[activeCourseKey].years[activeYearKey].subjects[k]={title:name,"last-year":[],"books":[]}; newSubjectName.value=""; saveToLocal(); renderSubjectsPanel();}
@@ -233,7 +233,7 @@ addSubjectBtn.onclick=()=>{ if(!activeCourseKey||!activeYearKey){alert("Select c
 // Remove PDF
 function removePDF(tab,name){ if(!confirm("Remove "+name+"?")) return; const subj=contentData.courses[activeCourseKey].years[activeYearKey].subjects[activeSubjectKey]; subj[tab]=subj[tab].filter(p=>p.name!==name); saveToLocal(); renderPDFsGrid();}
 
-// File Upload
+// File Upload (local & blob URL)
 fileInput.addEventListener("change",(e)=>{
   if(!activeCourseKey||!activeYearKey||!activeSubjectKey){alert("Select course → year → subject first"); fileInput.value=""; return;}
   Array.from(e.target.files).forEach(f=>{
